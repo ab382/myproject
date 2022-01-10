@@ -34,10 +34,10 @@ pipeline {
                 git 'https://github.com/ab382/myproject.git'
 
                 // Run Maven on a Unix agent.
-                sh "mvn spring-boot:run"
+                sh "mvn -Dmaven.test.failure.ignore=true spring-boot:run"
 
                 // To run Maven on a Windows agent, use
-                // bat "mvn spring-boot:run"
+                // bat "mvn -Dmaven.test.failure.ignore=true spring-boot:run"
             }
         }
     }
