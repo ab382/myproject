@@ -27,7 +27,7 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
             }
-//         }
+        }
 //         stage('run') {
 //             steps {
 //                 // Get some code from a GitHub repository
