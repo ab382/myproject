@@ -19,14 +19,14 @@ pipeline {
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
 
-//             post {
-//                 // If Maven was able to run the tests, even if some of the test
-//                 // failed, record the test results and archive the jar file.
-//                 success {
-//                     junit '**/target/surefire-reports/TEST-*.xml'
-//                     archiveArtifacts 'target/*.jar'
-//                 }
-//             }
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
         }
 //         stage('run') {
 //             steps {
@@ -67,17 +67,17 @@ pipeline {
 
                             nexusUrl: 'localhost:8081/',
 
-                            groupId: 'pom.com.torryharris',
+                            groupId: 'com.torryharris',
 
-                            version: 'pom.0.0.1-SNAPSHOT',
+                            version: '0.0.1-SNAPSHOT',
 
-                            repository: 'repository/maven-central-repository',
+                            repository: 'maven-central-repository',
 
                             credentialsId: 'NEXUS_CRED',
 
                             artifacts: [
 
-                                [artifactId: 'pom.JwelleryListingApp',
+                                [artifactId: 'JwelleryListingApp',
 
                                 classifier: '',
 
@@ -85,7 +85,7 @@ pipeline {
 
                                 type: pom.packaging],
 
-                                [artifactId: 'pom.JwelleryListingApp',
+                                [artifactId: 'JwelleryListingApp',
 
                                 classifier: '',
 
