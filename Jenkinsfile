@@ -28,85 +28,17 @@ pipeline {
                 }
             }
         }
-//         stage('run') {
-//             steps {
-//                 // Get some code from a GitHub repository
-//                 git 'https://github.com/ab382/myproject.git'
-
-//                 // Run Maven on a Unix agent.
-//                 sh "mvn spring-boot:run"
-
-//                 // To run Maven on a Windows agent, use
-//                 // bat "mvn spring-boot:run"
-//             }
-//         }
-            stage("Publish to Nexus Repository Manager") {
-
+        stage('run') {
             steps {
+                // Get some code from a GitHub repository
+                git 'https://github.com/ab382/myproject.git'
 
-                script {
+                // Run Maven on a Unix agent.
+                sh "mvn spring-boot:run"
 
-                    pom = readMavenPom file: "pom.xml";
-
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-
-                    artifactPath = filesByGlob[0].path;
-
-                    artifactExists = fileExists artifactPath;
-
-                    if(artifactExists) {
-
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-
-                        nexusArtifactUploader(
-                            nexusVersion: 'nexus3',
-                            
-                            protocol: 'http',
-
-                            nexusUrl: 'localhost:8081/',
-
-                            groupId: 'com.torryharris',
-
-                            version: '0.0.1-SNAPSHOT',
-
-                            repository: 'maven-central-repository',
-
-                            credentialsId: 'NEXUS_CRED',
-
-                            artifacts: [
-
-                                [artifactId: 'JwelleryListingApp',
-
-                                classifier: '',
-
-                                file: artifactPath,
-
-                                type: pom.packaging],
-
-                                [artifactId: 'JwelleryListingApp',
-
-                                classifier: '',
-
-                                file: "pom.xml",
-
-                                type: "pom"]
-
-                            ]
-
-                        );
-
-                    } else {
-
-                        error "*** File: ${artifactPath}, could not be found";
-
-                    }
-
-                }
-
+                // To run Maven on a Windows agent, use
+                // bat "mvn spring-boot:run"
             }
-
         }
     }
 }
